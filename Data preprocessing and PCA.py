@@ -1,12 +1,7 @@
 import cv2
 import os
-import glob
 import torch
 import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
 
 
 train_img_dir = "C:/Users/Fried/Desktop/SYDE 660A/Codes and Data/data/train" #path of training data
@@ -17,7 +12,7 @@ lines = [line.rstrip("\n").split(" ")[1:3] for line in lines]
 lines = np.array(lines)
 f.close()
 
-test_img_dir = "C:/Users/Fried/Desktop/SYDE 660A/Codes and Data/data/test" #path of training data
+test_img_dir = "C:/Users/Fried/Desktop/SYDE 660A/Codes and Data/data/test" #path of testing data
 
 f = open(train_img_dir+"/test_split_v3.txt", "r")
 lines = f.readlines()
@@ -132,12 +127,12 @@ def PCA_k(X,k=10):
 
 
 
-dict_ = PCA_POV(image_array,percentage=0.15) # Apply PCA on the resized images
+dict_ = PCA_POV(image_array,percentage=0.15) # apply PCA on the resized images
 dict_['P'].shape # Check output shape
 image_array_transformed = np.dot(image_array,dict_['P']) 
 
 
-PCA_components = open("PCA_data_all_v4.pkl", "wb") # Save the principle components
+PCA_components = open("PCA_data_all_v4.pkl", "wb") # save the principle components
 torch.save(dict_, PCA_components)
 PCA_components.close()
 
@@ -145,6 +140,6 @@ PCA_components = open("PCA_data_all_v4.pkl", "rb")
 output = torch.load(PCA_components)
 
 
-image_with_label_PCA = np.column_stack((image_array_transformed, y_train)) # Save the transformed images with labels
+image_with_label_PCA = np.column_stack((image_array_transformed, y_train)) # save the transformed images with labels
 np.savetxt('image_with_label_POV85.txt',image_with_label_PCA,fmt='%s')
 
