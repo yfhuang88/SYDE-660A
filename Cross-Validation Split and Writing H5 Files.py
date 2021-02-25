@@ -14,7 +14,7 @@ train_lbl = open(train_img_dir+'/'+train_lbl_file)
 train_file = train_lbl.readlines()
 train_lbl.close()
 
-train_file = [l.rstrip("\n").split(" ")[1:3] for l in train_file]
+train_file = [l.rstrip("\n").split(" ")[1:3] for l in train_file] #read the file name and label (2nd, 3rd columns)
 
 train_dict = {line[0]:line[1] for line in train_file}
 label_dict = {"COVID-19":0,"pneumonia":1,"normal":2}
